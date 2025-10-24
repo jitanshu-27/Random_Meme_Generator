@@ -7,7 +7,7 @@ import { useTheme } from '../hooks/useTheme'
 
 const Tags = () => {
     const [tag,setTag] = useState('car')
-    const{gif,loading,fetchData}= useGif(tag);
+    const { gif, loading, fetchData, error } = useGif(tag);
     const { isDark } = useTheme();
     
     function clickHandler(){
@@ -46,11 +46,18 @@ const Tags = () => {
           Random {tag} Gif
         </h2>
         
-        {loading ? (
+        {error ? (
+          <div className={`w-full max-w-md mx-4 p-4 rounded-lg text-center ${
+            isDark ? 'bg-red-900 text-red-200' : 'bg-red-100 text-red-800'
+          }`}>
+            <p className="font-medium mb-2">⚠️ Error</p>
+            <p className="text-sm">{error}</p>
+          </div>
+        ) : loading ? (
           <div role="status" aria-label={`Loading ${tag} gif`}>
             <Spinner/>
           </div>
-        ) : (
+        ) : gif ? (
           <div className="relative w-full max-w-md px-4">
             <img 
               src={gif} 
@@ -61,6 +68,13 @@ const Tags = () => {
             <div className="absolute top-2 right-6">
               <LikeButton gif={gif} tag={tag} />
             </div>
+          </div>
+        ) : (
+          <div className={`w-full max-w-md mx-4 p-8 rounded-lg text-center border-2 border-dashed ${
+            isDark ? 'border-gray-400 text-gray-300' : 'border-gray-400 text-gray-600'
+          }`}>
+            <p>🎬 No {tag} GIF to display</p>
+            <p className="text-sm mt-1">Click Generate to fetch a {tag} GIF</p>
           </div>
         )}
         
@@ -93,8 +107,9 @@ const Tags = () => {
                 : 'bg-yellow-500 text-black hover:bg-yellow-400 focus:ring-yellow-200'
             }`}
             aria-label={`Generate a new ${tag} gif`}
+            disabled={loading}
           >
-            Generate
+            {loading ? 'Generating...' : 'Generate'}
           </button>
         </div>
       </div>
