@@ -51,9 +51,15 @@ If there is no `.env.example`, check the project README for required variables.
 ### 7. Run the development server
 Start the app locally to see your changes live:
 ```bash
-npm start
+npm run dev
 ```
-Open `http://localhost:3000` in your browser.
+Open `http://localhost:5173` in your browser (Vite's default port).
+
+### 8. Lint your code (optional but recommended)
+Run ESLint to check for code style issues:
+```bash
+npm run lint
+```
 
 
 ## ✅ Making Changes
@@ -62,6 +68,8 @@ Open `http://localhost:3000` in your browser.
 - Add comments for non-obvious logic.
 - Update or add unit tests for any new functionality where applicable.
 - Update README or docs if you change behavior or add new public features.
+- Run `npm run lint` to check for style issues before committing.
+- Test your changes by running `npm run build` to ensure the production build works.
 
 ---
 
